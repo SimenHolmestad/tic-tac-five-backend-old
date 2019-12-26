@@ -35,4 +35,20 @@ router.route('/games').post(async (req, res) => {
   }
 });
 
+router.route('/games/:game_id').get(async (req, res) => {
+  try {
+    const gameExists = await Game.exists({ _id: req.params.game_id });
+    if (! gameExists) {
+      res.status(404).send('The game was not found');
+      return;
+    }
+
+    const game = await Game.findById(req.params.game_id);
+    res.json(game);
+  }
+  catch (err) {
+    res.send(err);
+  }
+});
+
 export default router;

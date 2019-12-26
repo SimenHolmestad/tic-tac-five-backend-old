@@ -19,7 +19,7 @@ Returns a list of all games which are not finished. The games returned will have
 ### `post /api/games`
 Requires the parameter `name`. Creates a game and returns it to the user.
 ### `get /api/games/:game_id`
-Returns all information about the game with the given `game_id`
+Returns all information about the game with the given `game_id`. Returns 404 if the game does not exist.
 ### `post /api/games/:game_id/move`
 Requires the parameters `xPos`, `yPos` and `player`. `xPos` and `yPos` should be integers between 0 and 20 (including both 0 and 20). `player` should be either "O" or "X". The API will return the next state of the game and will contain a field `"error"` if the move is illegal.
 
