@@ -17,8 +17,7 @@ To interact with the game, these endpoints should be used
 ### `get /api/active_games`
 Returns a list of all games which are not finished. The games returned will have all information except the history.
 ### `post /api/games`
-Requires the parameter `name`
-Creates a game and returns it to the user.
+Requires the parameter `name`. Creates a game and returns it to the user.
 ### `get /api/games/:game_id`
 Returns all information about the game with the given `game_id`
 ### `post /api/games/:game_id/move`
