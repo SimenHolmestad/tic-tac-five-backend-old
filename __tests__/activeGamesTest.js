@@ -7,10 +7,13 @@ import initialGameData from './../app/constants/initialGameData';
 const request = supertest(app);
 
 describe('active_games endpoint test', () => {
-    beforeAll(async () => {
+  beforeAll(async () => {
     // Connect to database
-    const url = `mongodb://127.0.0.1/game-model-test`;
+    const url = `mongodb://127.0.0.1/active-games-test`;
     await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+
+    // Delete every game in database
+    await Game.deleteMany();
   });
 
   afterAll(async () => {

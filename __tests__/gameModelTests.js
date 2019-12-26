@@ -7,6 +7,9 @@ describe('Game model tests', () => {
     // Connect to database
     const url = `mongodb://127.0.0.1/game-model-test`;
     await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+
+    // Delete every game in database
+    await Game.deleteMany();
   });
 
   afterAll(async () => {
