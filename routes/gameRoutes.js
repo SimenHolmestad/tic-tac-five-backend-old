@@ -100,8 +100,8 @@ router.route('/games/:game_id/move').post(async (req, res) => {
     return;
   }
 
-  const xPos = req.body.xPos;
-  const yPos = req.body.yPos;
+  const xPos = Number(req.body.xPos);
+  const yPos = Number(req.body.yPos);
   const player = req.body.player;
 
   // Find the next player and check if player string is legal

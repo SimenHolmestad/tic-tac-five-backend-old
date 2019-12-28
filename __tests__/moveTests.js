@@ -288,8 +288,8 @@ describe('move tests', () => {
 
     let response1 = await request.post('/api/games/' + game._id + '/move')
       	.send({
-          xPos: "0",
-          yPos: "0",
+          xPos: "0.1",
+          yPos: "0.4",
           player: "O"
         });
 
@@ -300,7 +300,7 @@ describe('move tests', () => {
     let response2 = await request.post('/api/games/' + game._id + '/move')
       	.send({
           xPos: 0,
-          yPos: "Den første",
+          yPos: "The first",
           player: "O"
         });
 
