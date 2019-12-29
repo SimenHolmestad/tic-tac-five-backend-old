@@ -27,24 +27,22 @@ describe('active_games endpoint test', () => {
     await Game.deleteMany();
   });
 
-  it('test no games returned', async done => {
+  it('test no games returned', async () => {
     const res = await request.get('/api/active_games');
     expect(res.status).toBe(200);
     expect(res.body).toEqual( [] );
-    done();
   });
 
-  it('test game returned', async done => {
+  it('test game returned', async () => {
     const game = new Game(initialGameData);
     await game.save();
     const res = await request.get('/api/active_games');
     expect(res.status).toBe(200);
     expect(res.body).not.toEqual( [] );
     expect(res.body[0].name).toEqual("Untitled game");
-    done();
   });
 
-  it('test multiple games returned', async done => {
+  it('test multiple games returned', async () => {
     const game1 = new Game(initialGameData);
     await game1.save();
 
@@ -54,10 +52,9 @@ describe('active_games endpoint test', () => {
     const res = await request.get('/api/active_games');
     expect(res.status).toBe(200);
     expect(res.body.length).toEqual(2);
-    done();
   });
 
-  it('test only unfinished games returned', async done => {
+  it('test only unfinished games returned', async () => {
     const game1 = new Game(initialGameData);
     await game1.save();
 
@@ -69,10 +66,9 @@ describe('active_games endpoint test', () => {
     const res = await request.get('/api/active_games');
     expect(res.status).toBe(200);
     expect(res.body.length).toEqual(1);
-    done();
   });
 
-  it('test history not returned', async done => {
+  it('test history not returned', async () => {
     const game = new Game(initialGameData);
     game.history = ["this", "can", "get", "very", "long"];
     await game.save();
@@ -80,6 +76,5 @@ describe('active_games endpoint test', () => {
     const res = await request.get('/api/active_games');
     expect(res.status).toBe(200);
     expect(res.body[0].history).toEqual(null);
-    done();
   });
 });

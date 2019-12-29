@@ -26,7 +26,7 @@ describe('create game tests', () => {
     await Game.deleteMany();
   });
 
-  it('test create game', async done => {
+  it('test create game', async () => {
     const response = await request.post('/api/games')
       	  .send({
             name: 'My first game'
@@ -39,15 +39,13 @@ describe('create game tests', () => {
     // Make sure the game is also stored in the database
     const gamesInDatabase = await Game.find();
     expect(gamesInDatabase[0].name).toEqual('My first game');
-    done();
   });
 
-  it('test make game without name', async done => {
+  it('test make game without name', async () => {
     const response = await request.post('/api/games');
 
     expect(response.status).toBe(200);
     expect(response.body.error).toEqual("You need to provide a name for the game!");
     expect(response._id).toEqual(undefined);
-    done();
   });
 });

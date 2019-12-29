@@ -32,7 +32,7 @@ describe('move tests', () => {
     await Game.deleteMany();
   });
 
-  it('test legal first moves', async done => {
+  it('test legal first moves', async () => {
     const game = createNewGame();
     game.name = "My first game";
     await game.save();
@@ -69,12 +69,9 @@ describe('move tests', () => {
     expect(response2.body.boardState[0][1]).toEqual("X");
     expect(response2.body.nextToMove).toEqual("O");
     expect(response2.body.history).toEqual([[0, 0, "O"], [0, 1, "X"]]);
-
-    done();
-
   });
 
-  it('test moves outside boards', async done => {
+  it('test moves outside boards', async () => {
     const game = createNewGame();
     await game.save();
 
@@ -121,11 +118,9 @@ describe('move tests', () => {
     expect(response.status).toBe(200);
     expect(response.body._id).toEqual(undefined);
     expect(response.body.error).toEqual("Position was outside of board. Only values between 0 and 20 allowed. Received x:0 and y:21");
-
-    done();
   });
 
-  it('test moving when not your turn', async done => {
+  it('test moving when not your turn', async () => {
     const game = createNewGame();
     await game.save();
 
@@ -141,11 +136,11 @@ describe('move tests', () => {
     expect(response1.body.error).toEqual("It is not X's turn.");
 
     await request.post('/api/games/' + game._id + '/move')
-      	.send({
-          xPos: 0,
-          yPos: 0,
-          player: "O"
-        });
+      .send({
+        xPos: 0,
+        yPos: 0,
+        player: "O"
+      });
 
     let response2 = await request.post('/api/games/' + game._id + '/move')
       	.send({
@@ -157,11 +152,9 @@ describe('move tests', () => {
     expect(response2.status).toBe(200);
     expect(response2.body._id).toEqual(undefined);
     expect(response2.body.error).toEqual("It is not O's turn.");
-
-    done();
   });
 
-  it('test moves on filled squares', async done => {
+  it('test moves on filled squares', async () => {
     const game = createNewGame();
     game.boardState[0][0] = "O";
     game.boardState[16][15] = "X";
@@ -188,23 +181,20 @@ describe('move tests', () => {
     expect(response2.status).toBe(200);
     expect(response2.body._id).toEqual(undefined);
     expect(response2.body.error).toEqual("There is already a cross or circle at square x:15, y:16");
-
-    done();
   });
 
-  it('test moving on nonexistent board', async done => {
+  it('test moving on nonexistent board', async () => {
     const fake_game_id = "5dfcf3c43f0ed01259baaaf5";
-        let response = await request.post('/api/games/' + fake_game_id + '/move')
+    let response = await request.post('/api/games/' + fake_game_id + '/move')
       	.send({
           xPos: 0,
           yPos: 0,
           player: "O"
         });
     expect(response.status).toBe(404);
-    done();
   });
 
-  it('test moving on finished board', async done => {
+  it('test moving on finished board', async () => {
     const game = createNewGame();
     game.winner = "X";
     await game.save();
@@ -219,10 +209,9 @@ describe('move tests', () => {
     expect(response.status).toBe(200);
     expect(response.body._id).toEqual(undefined);
     expect(response.body.error).toEqual("This game is finished. No more moves are allowed");
-    done();
   });
 
-  it('test missing post data', async done => {
+  it('test missing post data', async () => {
     const game = createNewGame();
     await game.save();
 
@@ -250,10 +239,9 @@ describe('move tests', () => {
     expect(response3.status).toBe(200);
     expect(response3.body._id).toEqual(undefined);
     expect(response3.body.error).toEqual("Missing argument: xPos, yPos, player");
-    done();
   });
 
-  it('test illegal player', async done => {
+  it('test illegal player', async () => {
     const game = createNewGame();
     await game.save();
 
@@ -278,11 +266,9 @@ describe('move tests', () => {
     expect(response2.status).toBe(200);
     expect(response2.body._id).toEqual(undefined);
     expect(response2.body.error).toEqual('Illegal value for player. Must be "O" or "X"');
-
-    done();
   });
 
-  it('test illegal coordinates', async done => {
+  it('test illegal coordinates', async () => {
     const game = createNewGame();
     await game.save();
 
@@ -308,10 +294,9 @@ describe('move tests', () => {
     expect(response2.body._id).toEqual(undefined);
     expect(response2.body.error).toEqual('xPos and yPos must be integers');
 
-    done();
   });
 
-  it('test last move made', async done => {
+  it('test last move made', async () => {
     const game = createNewGame();
     await game.save();
 
@@ -325,11 +310,9 @@ describe('move tests', () => {
     expect(response.status).toBe(200);
     expect(response.body._id).not.toEqual(undefined);
     expect(response.body.timeStarted === response.body.lastMoveMade).toEqual(false);
-
-    done();
   });
 
-  it('test winning horizontally', async done => {
+  it('test winning horizontally', async () => {
     const game = createNewGame();
     game.boardState[0][0] = "O";
     game.boardState[0][1] = "O";
@@ -347,11 +330,9 @@ describe('move tests', () => {
     expect(response.body.winner).toBe("O");
     expect(response.body.nextToMove).toBe(null);
     expect(response.body.winningLine).toEqual( [ [0,0], [0,1], [0,2], [0,3], [0,4] ] );
-
-    done();
   });
 
-  it('test winning vertically', async done => {
+  it('test winning vertically', async () => {
     const game = createNewGame();
     game.boardState[0][0] = "X";
     game.boardState[1][0] = "X";
@@ -370,11 +351,9 @@ describe('move tests', () => {
     expect(response.body.winner).toBe("X");
     expect(response.body.nextToMove).toBe(null);
     expect(response.body.winningLine).toEqual( [ [0,0], [1,0], [2,0], [3,0], [4,0] ] );
-
-    done();
   });
 
-  it('test winning diagonally', async done => {
+  it('test winning diagonally', async () => {
     const game = createNewGame();
     game.boardState[0][0] = "X";
     game.boardState[1][1] = "X";
@@ -413,6 +392,5 @@ describe('move tests', () => {
     expect(response2.body.nextToMove).toBe(null);
     expect(response2.body.winningLine).toEqual( [ [4,0], [3,1], [2,2], [1,3], [0,4] ] );
 
-    done();
   });
 });

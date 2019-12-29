@@ -27,7 +27,7 @@ describe('get game tests', () => {
     await Game.deleteMany();
   });
 
-  it('test get existing game', async done => {
+  it('test get existing game', async () => {
     const game = new Game(initialGameData);
     game.name = "Halla";
     await game.save();
@@ -36,13 +36,11 @@ describe('get game tests', () => {
     expect(response.status).toBe(200);
     expect(response.body.name).toBe("Halla");
     expect(response.body.history).toEqual([]);
-    done();
   });
 
-  it('test get nonexisting game', async done => {
+  it('test get nonexisting game', async () => {
     const fake_game_id = "5dfcf3c43f0ed01259baaaf5";
     const response = await request.get('/api/games/' + fake_game_id);
     expect(response.status).toBe(404);
-    done();
   });
 });
