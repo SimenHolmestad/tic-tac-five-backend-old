@@ -161,7 +161,7 @@ describe('move tests', () => {
     done();
   });
 
-  it('test moves on filled tiles', async done => {
+  it('test moves on filled squares', async done => {
     const game = createNewGame();
     game.boardState[0][0] = "O";
     game.boardState[16][15] = "X";
@@ -176,7 +176,7 @@ describe('move tests', () => {
 
     expect(response1.status).toBe(200);
     expect(response1.body._id).toEqual(undefined);
-    expect(response1.body.error).toEqual("There is already a cross or circle at tile x:0, y:0");
+    expect(response1.body.error).toEqual("There is already a cross or circle at square x:0, y:0");
 
     let response2 = await request.post('/api/games/' + game._id + '/move')
       	.send({
@@ -187,7 +187,7 @@ describe('move tests', () => {
 
     expect(response2.status).toBe(200);
     expect(response2.body._id).toEqual(undefined);
-    expect(response2.body.error).toEqual("There is already a cross or circle at tile x:15, y:16");
+    expect(response2.body.error).toEqual("There is already a cross or circle at square x:15, y:16");
 
     done();
   });

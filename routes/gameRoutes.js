@@ -145,9 +145,9 @@ router.route('/games/:game_id/move').post(async (req, res) => {
       return;
     }
 
-    // Check whether there is already done a move on the specified tile
+    // Check whether there is already done a move on the specified square
     if (game.boardState[yPos][xPos] != "-") {
-      const errorString = "There is already a cross or circle at tile x:" + xPos + ", y:" + yPos;
+      const errorString = "There is already a cross or circle at square x:" + xPos + ", y:" + yPos;
       res.json({
         error: errorString
       });

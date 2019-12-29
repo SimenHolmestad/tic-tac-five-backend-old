@@ -13,8 +13,8 @@ describe('test line search', () => {
     let yInterval = 0;
     let player = "X";
 
-    let matchingTiles = lineSearch(board, xPos, yPos, xInterval, yInterval, player);
-    expect(matchingTiles).toEqual([ [ 0, 1 ], [ 0, 2 ], [ 0, 3 ], [ 0, 4 ] ]);
+    let matchingSquares = lineSearch(board, xPos, yPos, xInterval, yInterval, player);
+    expect(matchingSquares).toEqual([ [ 0, 1 ], [ 0, 2 ], [ 0, 3 ], [ 0, 4 ] ]);
 
     xPos = 5;
     yPos = 0;
@@ -22,8 +22,8 @@ describe('test line search', () => {
     yInterval = 0;
     player = "X";
 
-    matchingTiles = lineSearch(board, xPos, yPos, xInterval, yInterval, player);
-    expect(matchingTiles).toEqual([ [ 0, 4 ], [ 0, 3 ], [ 0, 2 ], [ 0, 1 ], [ 0, 0 ] ]);
+    matchingSquares = lineSearch(board, xPos, yPos, xInterval, yInterval, player);
+    expect(matchingSquares).toEqual([ [ 0, 4 ], [ 0, 3 ], [ 0, 2 ], [ 0, 1 ], [ 0, 0 ] ]);
 
     xPos = 1;
     yPos = 1;
@@ -31,8 +31,8 @@ describe('test line search', () => {
     yInterval = 0;
     player = "X";
 
-    matchingTiles = lineSearch(board, xPos, yPos, xInterval, yInterval, player);
-    expect(matchingTiles).toEqual([ [ 1, 2 ], [1, 3] ]);
+    matchingSquares = lineSearch(board, xPos, yPos, xInterval, yInterval, player);
+    expect(matchingSquares).toEqual([ [ 1, 2 ], [1, 3] ]);
 
     xPos = 1;
     yPos = 2;
@@ -40,8 +40,8 @@ describe('test line search', () => {
     yInterval = 0;
     player = "X";
 
-    matchingTiles = lineSearch(board, xPos, yPos, xInterval, yInterval, player);
-    expect(matchingTiles).toEqual([ ]);
+    matchingSquares = lineSearch(board, xPos, yPos, xInterval, yInterval, player);
+    expect(matchingSquares).toEqual([ ]);
 
     xPos = 2;
     yPos = 0;
@@ -49,8 +49,8 @@ describe('test line search', () => {
     yInterval = 0;
     player = "X";
 
-    matchingTiles = lineSearch(board, xPos, yPos, xInterval, yInterval, player);
-    expect(matchingTiles).toEqual([ [ 0, 1 ], [ 0, 0 ] ]);
+    matchingSquares = lineSearch(board, xPos, yPos, xInterval, yInterval, player);
+    expect(matchingSquares).toEqual([ [ 0, 1 ], [ 0, 0 ] ]);
   });
 
   it('test diagonal lines', () => {
@@ -65,8 +65,8 @@ describe('test line search', () => {
     let yInterval = 1;
     let player = "X";
 
-    let matchingTiles = lineSearch(board, xPos, yPos, xInterval, yInterval, player);
-    expect(matchingTiles).toEqual([ [ 1, 1 ], [ 2, 2 ], [ 3, 3 ] ]);
+    let matchingSquares = lineSearch(board, xPos, yPos, xInterval, yInterval, player);
+    expect(matchingSquares).toEqual([ [ 1, 1 ], [ 2, 2 ], [ 3, 3 ] ]);
 
     xPos = 4;
     yPos = 0;
@@ -74,8 +74,8 @@ describe('test line search', () => {
     yInterval = 1;
     player = "X";
 
-    matchingTiles = lineSearch(board, xPos, yPos, xInterval, yInterval, player);
-    expect(matchingTiles).toEqual([ [ 1, 3 ], [ 2, 2 ] ]);
+    matchingSquares = lineSearch(board, xPos, yPos, xInterval, yInterval, player);
+    expect(matchingSquares).toEqual([ [ 1, 3 ], [ 2, 2 ] ]);
 
     xPos = 1;
     yPos = 2;
@@ -83,8 +83,8 @@ describe('test line search', () => {
     yInterval = -1;
     player = "X";
 
-    matchingTiles = lineSearch(board, xPos, yPos, xInterval, yInterval, player);
-    expect(matchingTiles).toEqual([ [ 1, 2 ], [ 0, 3 ] ]);
+    matchingSquares = lineSearch(board, xPos, yPos, xInterval, yInterval, player);
+    expect(matchingSquares).toEqual([ [ 1, 2 ], [ 0, 3 ] ]);
   });
 });
 
@@ -105,4 +105,20 @@ describe('test checkForWinner', () => {
     let notWinningLine = checkForWinner(board, 2, 2);
     expect(notWinningLine).toEqual(null);
   });
+
+  it('test for six in a row', () => {
+    const board = [["X", "X", "X", "X", "X", "X", "-"],
+                   ["-", "X", "X", "X", "-", "-", "-"],
+                   ["-", "-", "X", "-", "-", "-", "-"],
+                   ["-", "-", "-", "X", "-", "-", "-"],
+                   ["-", "-", "-", "-", "-", "-", "-"],
+                   ["-", "-", "-", "-", "-", "-", "-"]];
+
+    let winningLine = checkForWinner(board, 0, 0);
+    expect(winningLine).toEqual([ [0, 0], [ 0, 1 ], [ 0, 2 ], [ 0, 3 ], [ 0, 4 ] ]);
+
+    winningLine = checkForWinner(board, 2, 0);
+    expect(winningLine).toEqual([ [0, 0], [ 0, 1 ], [ 0, 2 ], [ 0, 3 ], [ 0, 4 ] ]);
+  });
+
 });
