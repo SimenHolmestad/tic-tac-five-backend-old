@@ -329,88 +329,90 @@ describe('move tests', () => {
     done();
   });
 
-  // it('test winning horizontally', async done => {
-  //   const game = createNewGame();
-  //   game.board[0][0] = "O";
-  //   game.board[0][1] = "O";
-  //   game.board[0][2] = "O";
-  //   game.board[0][3] = "O";
-  //   await game.save();
+  it('test winning horizontally', async done => {
+    const game = createNewGame();
+    game.boardState[0][0] = "O";
+    game.boardState[0][1] = "O";
+    game.boardState[0][2] = "O";
+    game.boardState[0][3] = "O";
+    await game.save();
 
-  //   let response = await request.post('/api/games/' + game._id + '/move')
-  //     	.send({
-  //         xPos: 4,
-  //         yPos: 0,
-  //         player: "O"
-  //       });
+    let response = await request.post('/api/games/' + game._id + '/move')
+      	.send({
+          xPos: 4,
+          yPos: 0,
+          player: "O"
+        });
 
-  //   expect(response.body.winner).toBe("O");
-  //   expect(response.body.nextToMove).toBe(null);
-  //   expect(response.body.winningLine).toBe( [ [0,0], [0,1], [0,2], [0,3], [0,4] ] );
+    expect(response.body.winner).toBe("O");
+    expect(response.body.nextToMove).toBe(null);
+    expect(response.body.winningLine).toEqual( [ [0,0], [0,1], [0,2], [0,3], [0,4] ] );
 
-  //   done();
-  // });
+    done();
+  });
 
-  // it('test winning vertically', async done => {
-  //   const game = createNewGame();
-  //   game.board[0][0] = "X";
-  //   game.board[1][0] = "X";
-  //   game.board[2][0] = "X";
-  //   game.board[3][0] = "X";
-  //   await game.save();
+  it('test winning vertically', async done => {
+    const game = createNewGame();
+    game.boardState[0][0] = "X";
+    game.boardState[1][0] = "X";
+    game.boardState[2][0] = "X";
+    game.boardState[3][0] = "X";
+    game.nextToMove = "X";
+    await game.save();
 
-  //   let response = await request.post('/api/games/' + game._id + '/move')
-  //     	.send({
-  //         xPos: 0,
-  //         yPos: 4,
-  //         player: "X"
-  //       });
+    let response = await request.post('/api/games/' + game._id + '/move')
+      	.send({
+          xPos: 0,
+          yPos: 4,
+          player: "X"
+        });
 
-  //   expect(response.body.winner).toBe("X");
-  //   expect(response.body.nextToMove).toBe(null);
-  //   expect(response.body.winningLine).toBe( [ [0,0], [1,0], [2,0], [3,0], [4,0] ] );
+    expect(response.body.winner).toBe("X");
+    expect(response.body.nextToMove).toBe(null);
+    expect(response.body.winningLine).toEqual( [ [0,0], [1,0], [2,0], [3,0], [4,0] ] );
 
-  //   done();
-  // });
+    done();
+  });
 
-  // it('test winning diagonally', async done => {
-  //   const game = createNewGame();
-  //   game.board[0][0] = "X";
-  //   game.board[1][1] = "X";
-  //   game.board[2][2] = "X";
-  //   game.board[3][3] = "X";
-  //   await game.save();
+  it('test winning diagonally', async done => {
+    const game = createNewGame();
+    game.boardState[0][0] = "X";
+    game.boardState[1][1] = "X";
+    game.boardState[2][2] = "X";
+    game.boardState[3][3] = "X";
+    game.nextToMove = "X";
+    await game.save();
 
-  //   let response = await request.post('/api/games/' + game._id + '/move')
-  //     	.send({
-  //         xPos: 4,
-  //         yPos: 4,
-  //         player: "X"
-  //       });
+    let response = await request.post('/api/games/' + game._id + '/move')
+      	.send({
+          xPos: 4,
+          yPos: 4,
+          player: "X"
+        });
 
-  //   expect(response.body.winner).toBe("X");
-  //   expect(response.body.nextToMove).toBe(null);
-  //   expect(response.body.winningLine).toBe( [ [0,0], [1,1], [2,2], [3,3], [4,4] ] );
+    expect(response.body.winner).toBe("X");
+    expect(response.body.nextToMove).toBe(null);
+    expect(response.body.winningLine).toEqual( [ [0,0], [1,1], [2,2], [3,3], [4,4] ] );
 
 
-  //   const game2 = new Game(initialGameData);
-  //   game2.board[0][4] = "X";
-  //   game2.board[1][3] = "X";
-  //   game2.board[2][2] = "X";
-  //   game2.board[3][1] = "X";
-  //   await game2.save();
+    const game2 = new Game(initialGameData);
+    game2.boardState[0][4] = "O";
+    game2.boardState[1][3] = "O";
+    game2.boardState[2][2] = "O";
+    game2.boardState[3][1] = "O";
+    await game2.save();
 
-  //   let response2 = await request.post('/api/games/' + game2._id + '/move')
-  //     	.send({
-  //         xPos: 0,
-  //         yPos: 4,
-  //         player: "X"
-  //       });
+    let response2 = await request.post('/api/games/' + game2._id + '/move')
+      	.send({
+          xPos: 0,
+          yPos: 4,
+          player: "O"
+        });
 
-  //   expect(response2.body.winner).toBe("X");
-  //   expect(response2.body.nextToMove).toBe(null);
-  //   expect(response2.body.winningLine).toBe( [ [0,4], [1,3], [2,2], [3,1], [4,0] ] );
+    expect(response2.body.winner).toBe("O");
+    expect(response2.body.nextToMove).toBe(null);
+    expect(response2.body.winningLine).toEqual( [ [4,0], [3,1], [2,2], [1,3], [0,4] ] );
 
-  //   done();
-  // });
+    done();
+  });
 });

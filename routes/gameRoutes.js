@@ -1,6 +1,7 @@
 import express from 'express';
 import Game from './../app/models/game';
 import initialGameData from './../app/constants/initialGameData';
+import checkForWinner from './../app/utils/checkForWinner';
 
 const router = express.Router();
 
@@ -170,6 +171,15 @@ router.route('/games/:game_id/move').post(async (req, res) => {
     game.history.push(historyMove);
     const currentTime = Date();
     game.lastMoveMade = currentTime;
+
+    // Check if the move is a winning move
+    const winningLine = checkForWinner(game.boardState, xPos, yPos);
+    if (winningLine != null) {
+      game.nextToMove = null;
+      game.winner = player;
+      game.winningLine = winningLine;
+    }
+
     await game.save();
 
     // Send the game data back to the player
