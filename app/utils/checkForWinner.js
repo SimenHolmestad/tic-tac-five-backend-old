@@ -1,4 +1,4 @@
-export function lineSearch(board, xPos, yPos, xInterval, yInterval, player) {
+export function lineSearch(board, yPos, xPos, xInterval, yInterval, player) {
   // Search in a line and returns coordinates of squares in a row matching the player
   // string. Note: The starting square is not included.
   const matchingSquares = [];
@@ -20,7 +20,7 @@ export function lineSearch(board, xPos, yPos, xInterval, yInterval, player) {
 
 }
 
-function checkForWinner(board, xPos, yPos) {
+function checkForWinner(board, yPos, xPos) {
   // Checks if the move specified is a winning move. If this is the case, an array of
   // the moves in the winning line is returned. If there is no winner, null is
   // returned.
@@ -32,8 +32,8 @@ function checkForWinner(board, xPos, yPos) {
 
   for (const direction of directionsToCheck) {
     // Search in both ways to find squares "in a row".
-    const squaresInDirection = lineSearch(board, xPos, yPos, direction[1], direction[0], player);
-    const squaresInOppositeDirection = lineSearch(board, xPos, yPos, -direction[1], -direction[0], player);
+    const squaresInDirection = lineSearch(board, yPos, xPos, direction[1], direction[0], player);
+    const squaresInOppositeDirection = lineSearch(board, yPos, xPos, -direction[1], -direction[0], player);
     const totalSquares = [startSquare, ...squaresInDirection, ...squaresInOppositeDirection];
 
     // Check if there are 5 or more squares in a row

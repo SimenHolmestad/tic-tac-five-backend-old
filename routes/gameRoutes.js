@@ -173,7 +173,7 @@ router.route('/games/:game_id/move').post(async (req, res) => {
     game.lastMoveMade = currentTime;
 
     // Check if the move is a winning move
-    const winningLine = checkForWinner(game.boardState, xPos, yPos);
+    const winningLine = checkForWinner(game.boardState, yPos, xPos);
     if (winningLine != null) {
       game.nextToMove = null;
       game.winner = player;
