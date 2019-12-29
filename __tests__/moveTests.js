@@ -51,7 +51,7 @@ describe('move tests', () => {
 
     expect(response1.body.boardState[0][0]).toEqual("O");
     expect(response1.body.nextToMove).toEqual("X");
-    expect(response1.body.history).toEqual([[0, 0, "O"]]);
+    expect(response1.body.history).toEqual([[10, 10, "X"], [0, 0, "O"]]);
 
     const response2 = await request.post('/api/games/' + game._id + '/move')
       	  .send({
@@ -68,7 +68,7 @@ describe('move tests', () => {
     expect(response2.body.boardState[0][0]).toEqual("O");
     expect(response2.body.boardState[0][1]).toEqual("X");
     expect(response2.body.nextToMove).toEqual("O");
-    expect(response2.body.history).toEqual([[0, 0, "O"], [0, 1, "X"]]);
+    expect(response2.body.history).toEqual([[10, 10, "X"], [0, 0, "O"], [0, 1, "X"]]);
   });
 
   it('test moves outside boards', async () => {

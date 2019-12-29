@@ -35,7 +35,7 @@ describe('get game tests', () => {
     const response = await request.get('/api/games/' + game._id);
     expect(response.status).toBe(200);
     expect(response.body.name).toBe("Halla");
-    expect(response.body.history).toEqual([]);
+    expect(response.body.history).toEqual([[10, 10, "X"]]);
   });
 
   it('test get nonexisting game', async () => {
