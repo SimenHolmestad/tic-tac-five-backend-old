@@ -1,5 +1,5 @@
 # Tic-tac-five
-This project is an API for handling games of tic-tac-five. Normal tic-tac-toe, but with 5 in a row and a much larger board!
+This project is an API for handling games of tic-tac-five. Normal tic-tac-toe, but with 5 in a row and a much larger board! A frontend which uses the api can be found [here](https://github.com/SimenHolmestad/tic-tac-five-frontend).
 ## The Game model
 The games are stored in the database with the Game model. A game contains a board of 21*21 squares, and starts with an X in the center. Every game contains these data fields:
 - `_id`: The ID of the game.
